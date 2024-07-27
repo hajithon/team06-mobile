@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { lightBlack, mainThemeColor, veryDarkGery } from '@/assets/styles/RawColors';
+import { grey, lightBlack, mainThemeColor, veryDarkGery } from '@/assets/styles/RawColors';
 
 export default function TabLayout() {
   return (
@@ -12,29 +12,45 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: { 
           position: 'absolute', 
-          height: '7.5%', 
+          height: '10%', 
           backgroundColor: veryDarkGery,
-          paddingBottom: 10
+          paddingBottom: 10,
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25
         }
       }}>
       <Tabs.Screen
-        name="index"
+        name="maps"
         options={{
           title: '보관함 찾기',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? 'home' : 'home-outline'} 
+              name={'location'}
+              focused={focused} 
               color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="maps"
+        name="index"
         options={{
-          title: '근처 편의점 찾기',
+          title: 'QR',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? 'code-slash' : 'code-slash-outline'} 
+              name={'qr'}
+              focused={focused} 
+              color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="my"
+        options={{
+          title: '마이페이지',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon 
+              name={'my'}
+              focused={focused} 
               color={color} />
           ),
         }}
