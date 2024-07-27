@@ -6,6 +6,7 @@ import { mockHeight, mockWidth } from "@/constants/StorageConfig";
 import { black, grey, lightBlack, lightGery, mainThemeColor, white } from "@/assets/styles/RawColors";
 import { ThemedButton } from "@/components/ThemedButton";
 import { router } from "expo-router";
+import QRCode from "react-native-qrcode-svg";
 
 const { width, height } = Dimensions.get("window");
 const uw = width / mockWidth;
@@ -19,7 +20,9 @@ const TabsIndex = () => {
             가맹점 직원에게
             해당 QR을 보여주세요
         </Text>
-        <Image></Image>
+        <View style={{ top: 230 * uh, left: 0, right: 0, alignItems: 'center', justifyContent: 'center' }}>
+            <QRCode value="https://www.naver.com" size={300}></QRCode>
+        </View>
         <ThemedButton style={styles.backButton} text="뒤로가기" type="greyed" onPress={() => {
             router.navigate('/retrieve');
         }}/>

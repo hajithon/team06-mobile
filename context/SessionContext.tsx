@@ -48,7 +48,8 @@ function SessionProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if(google && !google.error && google.userInfo?.user){
-      backendLogin(google.userInfo.idToken!, "google");
+      setSession(google.userInfo.idToken);
+      //backendLogin(google.userInfo.idToken!, "google");
       setUser({
           email: google.userInfo.user.email,
           name: google.userInfo.user.name,
@@ -59,7 +60,8 @@ function SessionProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if(kakao && !kakao.error && kakao.user && kakao.token){
-      backendLogin(kakao.token.accessToken, "kakao");
+      setSession(kakao.token.accessToken);
+      //backendLogin(kakao.token.accessToken, "kakao");
       console.log(kakao.token.accessToken);
       setUser({
         email: kakao.user.email,
