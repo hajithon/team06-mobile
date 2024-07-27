@@ -1,9 +1,9 @@
 import { grey, lightBlack, mainLightThemeColor, mainThemeColor } from "@/assets/styles/RawColors";
 import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedView } from "@/components/ThemedView"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dimensions, PermissionsAndroid, Platform, Pressable, StyleSheet, Text } from "react-native"
-import { Geometry, GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { Geometry, GooglePlaceDetail, GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
@@ -11,13 +11,15 @@ import Geolocation, { GeolocationResponse } from '@react-native-community/geoloc
 const GOOGLE_PLACES_API_KEY = "AIzaSyB0yDs8dfpPN_RBewa-LfAhPEeofeR8gyQ";
 
 const MapIndex = () => {
+    const ref = useRef<MapView | null>(null);
+
     const [region, setRegion] = useState<{
         latitude : number,
         longitude: number,
         latitudeDelta: number,
         longitudeDelta: number,
     } | null>(null);
-    const [places, setPlaces] = useState<Geometry[]>([]);
+    const [places, setPlaces] = useState<GooglePlaceDetail[]>([]);
 
     useEffect(() => {
     const requestLocationPermission = async () => {
@@ -69,19 +71,22 @@ const MapIndex = () => {
     return <SafeAreaProvider style={styles.container}>
         {region && (
         <MapView
-          style={styles.map}
-          region={region}
-          showsUserLocation={true}
+            ref={ref}
+            style={styles.map}
+            region={region}
+            showsUserLocation={true}
         >
-          {places.map((place : any, index) => (
+          {places.map((place : GooglePlaceDetail, index) => (
             <Marker
-              key={index}
-              coordinate={{
-                latitude: place.geometry.location.lat,
-                longitude: place.geometry.location.lng,
-              }}
-              title={place.name}
-              description={place.vicinity}
+                key={index}
+                coordinate={{
+                    latitude: place.geometry.location.lat,
+                    longitude: place.geometry.location.lng,
+                }}
+                title={place.name}
+                description={place.vicinity}
+                onPress={(e) => {
+                }}
             />
           ))}
         </MapView>
@@ -100,7 +105,15 @@ const MapIndex = () => {
                 fetchDetails={true}
                 onPress={(data, details) => {
                     setPlaces(prev => {
-                        return [...prev, details!.geometry];
+                        const newRegion = {
+                            latitude: details!.geometry.location.lat,
+                            longitude: details!.geometry.location.lng,
+                            latitudeDelta: 0.001,
+                            longitudeDelta: 0.001,
+                        }
+                        setRegion(newRegion);
+                        ref.current?.animateToRegion(newRegion, 500);
+                        return [...prev, details!];
                     })
                 }}
                 onFail={(error) => console.log(error)}
@@ -147,7 +160,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: mainLightThemeColor,
         left: 20,
-        top: 130,
+        bottom: 130,
         borderRadius: 10,
         padding: 5,
         borderColor: mainThemeColor
@@ -156,7 +169,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: grey,
         left: 120,
-        top: 130,
+        bottom: 130,
         borderRadius: 10,
         padding: 5,
         borderColor: mainThemeColor
