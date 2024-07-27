@@ -12,7 +12,7 @@ buildscript {
     }
     repositories {
         google()
-        mavenCentral()
+        mavenCentral()        
     }
     dependencies {
         classpath('com.android.tools.build:gradle')
@@ -37,5 +37,6 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }

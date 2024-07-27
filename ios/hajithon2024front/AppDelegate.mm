@@ -4,8 +4,19 @@
 #import <React/RCTLinkingManager.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <RNKakaoLogins.h>
 
 @implementation AppDelegate
+
+// kakao
+- (BOOL)application:(UIApplication *)app
+     openURL:(NSURL *)url
+     options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+ if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
+    return [RNKakaoLogins handleOpenUrl: url];
+ }
+ return NO;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

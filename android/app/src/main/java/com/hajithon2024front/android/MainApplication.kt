@@ -46,6 +46,7 @@ class MainApplication : Application(), ReactApplication {
       load()
     }
     ApplicationLifecycleDispatcher.onApplicationCreate(this)
+    //KakaoSdk.init(this, "${24586884510cb0286f8df37243b09164}")
   }
 
   override fun onConfigurationChanged(newConfig: Configuration) {

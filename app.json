@@ -14,7 +14,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.hajithon2024front.ios",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.hajithon2024front.android",
@@ -34,6 +37,27 @@
         "@react-native-google-signin/google-signin",
         {
           "iosUrlScheme": "com.googleusercontent.apps.207065817050-k14kuhfd7nff2cip5buicudes75tutam"
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "faceIDPermission": "Allow KeepAndRunning to access your Face ID biometric data."
+        }
+      ],
+      [
+        "@react-native-seoul/kakao-login",
+        {
+          "kakaoAppKey": "{24586884510cb0286f8df37243b09164}",
+          "kotlinVersion": "1.9.0"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": ["https://devrepo.kakao.com/nexus/content/groups/public/"]
+          }
         }
       ]
     ],
