@@ -1,7 +1,7 @@
 import { Text, type TextProps, StyleSheet, Pressable, PressableProps, StyleProp, View, ViewStyle, TextStyle } from 'react-native';
 import { black, darkGery, lightGery, mainThemeColor, white } from '@/assets/styles/RawColors';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
-import Google from '../assets/svg/google.svg';
+import Kakao from '../assets/svg/kakao.svg';
 
 export type ThemedTextProps = PressableProps & {
     type?: 'default' | 'greyed';
@@ -9,7 +9,7 @@ export type ThemedTextProps = PressableProps & {
     containerStyle?: ViewStyle;
 };
 
-export function GoogleButton({
+export function KakaoButton({
     containerStyle,
     textStyle,
     type = 'default',
@@ -35,15 +35,15 @@ export function GoogleButton({
         {...rest}>
             <Animated.View style={[
                     styles.defaultAnimated,
-                    { backgroundColor: white },
+                    { backgroundColor: "#FEE500" },
                     animatedStyle
                 ]}>
-                <Google width={25} height={25} style={{ marginLeft: 25 }}></Google>
+                <Kakao width={25} height={25} style={{ marginLeft: 25 }}></Kakao>
                 <Text style={[ 
                     textStyle,
                     { color: black },
                     styles.default
-                ]}>구글 계정으로 로그인</Text>
+                ]}>카카오 계정으로 로그인</Text>
             </Animated.View>
         </Pressable>
     );

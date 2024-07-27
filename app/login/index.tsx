@@ -3,9 +3,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GoogleButton } from "@/components/GoogleButton";
 import { useEffect } from "react";
 import { useSession } from "@/context/SessionContext";
+import { KakaoButton } from "@/components/KakaoButton";
 
 const LoginIndex = () => {
-    const { user, session, googleSignIn } = useSession();
+    const { user, session, googleSignIn, kakaoSignIn } = useSession();
 
     useEffect(() => {
         if(!!session && !!user){
@@ -16,7 +17,10 @@ const LoginIndex = () => {
     return <SafeAreaProvider> 
         <GoogleButton onPress={() => {
             googleSignIn();
-        }}></GoogleButton>
+        }} />
+        <KakaoButton onPress={() => {
+            kakaoSignIn();
+        }} />
     </SafeAreaProvider>;
 }
 

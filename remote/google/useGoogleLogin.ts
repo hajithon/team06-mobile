@@ -42,7 +42,17 @@ function useGoogleLogin() {
         }
     };
 
-    return { google, googleLogin };
+    const googleLogout = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signOut();
+            setGoogle({});
+        } catch (error) {
+            setGoogle({ error: "" + error });
+        }
+    }; 
+
+    return { google, googleLogin, googleLogout };
 }
 
 export default useGoogleLogin;

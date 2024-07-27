@@ -1,5 +1,6 @@
 import { useStorageState } from '@/hooks/useStorageState';
 import useGoogleLogin from '@/remote/google/useGoogleLogin';
+import useKakaoLogin from '@/remote/kakao/useKakaoLogin';
 import { useContext, createContext, type PropsWithChildren, useState, useEffect } from 'react';
 
 interface MyUser {
@@ -10,12 +11,14 @@ interface MyUser {
 
 const AuthContext = createContext<{
     googleSignIn: () => void;
+    kakaoSignIn: () => void;
     signOut: () => void;
     session?: string | null;
     isLoading: boolean;
     user: MyUser | null;
 }>({
     googleSignIn: () => null,
+    kakaoSignIn: () => null,
     signOut: () => null,
     session: null,
     isLoading: false,
@@ -38,18 +41,32 @@ function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
   //const [ token, setToken ] = useState<string | null>(null);
   const [ user, setUser ] = useState<MyUser | null>(null);
-  const { google, googleLogin } = useGoogleLogin();
+  const { google, googleLogin, googleLogout } = useGoogleLogin();
+  const { kakao, signInWithKakao, signOutWithKakao } = useKakaoLogin();
 
   useEffect(() => {
-        if(google && !google.error && google.userInfo?.user){
-            setSession(google.userInfo.idToken);
-            setUser({
-                email: google.userInfo.user.email,
-                name: google.userInfo.user.name,
-                profile_photo: google.userInfo.user.photo,
-            });
-        }
+    if(google && !google.error && google.userInfo?.user){
+      setSession(google.userInfo.idToken);
+      console.log(google.userInfo.idToken);
+      setUser({
+          email: google.userInfo.user.email,
+          name: google.userInfo.user.name,
+          profile_photo: google.userInfo.user.photo,
+      });
+    }
   }, [google]);
+
+  useEffect(() => {
+    if(kakao && !kakao.error && kakao.user && kakao.token){
+      setSession(kakao.token.idToken);
+      console.log(kakao.token.idToken);
+      setUser({
+        email: kakao.user.email,
+        name: kakao.user.nickname,
+        profile_photo: kakao.user.profileImageUrl,
+    });
+    }
+  }, [kakao]);
 
   return (
     <AuthContext.Provider
@@ -58,9 +75,14 @@ function SessionProvider({ children }: PropsWithChildren) {
           // Perform sign-in logic here
           googleLogin();
         },
+        kakaoSignIn: () => {
+          signInWithKakao();
+        },
         signOut: () => {
             setUser(null);
             setSession(null);
+            googleLogout();
+            signOutWithKakao();
         },
         session,
         isLoading,
