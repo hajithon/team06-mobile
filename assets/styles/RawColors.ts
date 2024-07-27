@@ -13,7 +13,7 @@ const veryLightGery = '#F4F6FA';
 const lightGery = '#E2E6EF';
 const grey = '#9DA1AD';
 const darkGery = '#6A6F7A';
-const veryDarkGery = '#4E525C';
+const veryDarkGery = '##292929';
 const lightBlack = '#131517';
 const black = '#0F1011';
 

@@ -1,6 +1,6 @@
 import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedView } from "@/components/ThemedView";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import BannerTitle from '@/assets/svg/bannertitle.svg';
@@ -21,7 +21,9 @@ function AppIndex() {
     return <SafeAreaProvider style={styles.container}>
         <BannerBack width={width} height={width} style={styles.back}></BannerBack>
         <BannerTitle style={styles.banner}></BannerTitle>
-        <ThemedButton containerStyle={styles.button} text="가입하기" type="onboard"></ThemedButton>
+        <ThemedButton containerStyle={styles.button} text="가입하기" type="onboard" onPress={() => {
+            router.navigate("/login");
+        }}></ThemedButton>
         <Text style={[ styles.text, {color: veryLightGery, textAlign: 'center'} ]}>계정이 이미 있으신가요? <ThemedLink type="onboard" href="/login">로그인하기</ThemedLink></Text>
     </SafeAreaProvider>
 }
@@ -48,14 +50,15 @@ const styles = StyleSheet.create({
     button: {
         position: 'absolute',
         top: 673 * uh,
-        bottom: 60 * uh,
+        bottom: 51 * uh,
         left: 20 * uw,
         right: 20 * uw,
+        height: 60,
+        lineHeight: 60
     },
     text: {
         position: 'absolute',
-        top: 700 * uh,
-        bottom: 60 * uh,
+        bottom: 41 * uh,
         left: 20 * uw,
         right: 20 * uw,
     }

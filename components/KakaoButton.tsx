@@ -4,12 +4,14 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } fr
 import Kakao from '../assets/svg/kakao.svg';
 
 export type ThemedTextProps = PressableProps & {
+    text?: string,
     type?: 'default' | 'greyed';
     textStyle?: TextStyle;
     containerStyle?: ViewStyle;
 };
 
 export function KakaoButton({
+    text,
     containerStyle,
     textStyle,
     type = 'default',
@@ -43,7 +45,7 @@ export function KakaoButton({
                     textStyle,
                     { color: black },
                     styles.default
-                ]}>카카오 계정으로 로그인</Text>
+                ]}>{text || "카카오 계정으로 로그인"}</Text>
             </Animated.View>
         </Pressable>
     );

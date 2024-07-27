@@ -37,8 +37,8 @@ export function ThemedButton({
     return (
         <Pressable
         style={[
-            containerStyle,
             styles.defaultContainer,
+            containerStyle,
         ]}
         onPressIn={() => {
             size.value = withSpring(0.9, { duration: 75 });
@@ -52,10 +52,10 @@ export function ThemedButton({
                     { backgroundColor },
                     animatedStyle
                 ]}>
-                <Text style={[ 
+                <Text style={[
+                    styles.default,
                     textStyle,
-                    { color },
-                    styles.default
+                    { color }
                 ]}>{text}</Text>
             </Animated.View>
         </Pressable>
@@ -65,10 +65,9 @@ export function ThemedButton({
 const styles = StyleSheet.create({
     default: {
         fontSize: 16,
-        lineHeight: 24,
+        height: 'auto',
         textAlign: 'center',
-        flex: 1,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     defaultContainer: {
         display: 'flex',
@@ -79,5 +78,6 @@ const styles = StyleSheet.create({
         height: '100%',
         borderRadius: 16,
         padding: 8,
+        justifyContent: 'center'
     }
 });

@@ -4,12 +4,14 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } fr
 import Google from '../assets/svg/google.svg';
 
 export type ThemedTextProps = PressableProps & {
+    text?: string,
     type?: 'default' | 'greyed';
     textStyle?: TextStyle;
     containerStyle?: ViewStyle;
 };
 
 export function GoogleButton({
+    text,
     containerStyle,
     textStyle,
     type = 'default',
@@ -43,7 +45,7 @@ export function GoogleButton({
                     textStyle,
                     { color: black },
                     styles.default
-                ]}>구글 계정으로 로그인</Text>
+                ]}>{text || "구글 계정으로 로그인"}</Text>
             </Animated.View>
         </Pressable>
     );

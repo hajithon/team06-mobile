@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { mainThemeColor } from '@/assets/styles/RawColors';
+import { lightBlack, mainThemeColor, veryDarkGery } from '@/assets/styles/RawColors';
 
 export default function TabLayout() {
   return (
@@ -10,12 +10,17 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: mainThemeColor,
         headerShown: false,
-        tabBarStyle: { position: 'absolute', borderRadius: 8, bottom: 8, left: 8, right: 8 }
+        tabBarStyle: { 
+          position: 'absolute', 
+          height: '7.5%', 
+          backgroundColor: veryDarkGery,
+          paddingBottom: 10
+        }
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: '메인 메뉴',
+          title: '보관함 찾기',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
               name={focused ? 'home' : 'home-outline'} 
