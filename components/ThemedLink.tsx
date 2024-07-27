@@ -1,32 +1,31 @@
 import { Text, type TextProps, StyleSheet, Pressable, PressableProps, StyleProp, View, ViewStyle, TextStyle } from 'react-native';
 import { black, darkGery, lightGery, mainStrongThemeColor, mainThemeColor, veryDarkGery, veryLightGery, white } from '@/assets/styles/RawColors';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
+import { Link } from 'expo-router';
+import { LinkProps } from 'expo-router/build/link/Link';
 
-export type ThemedTextProps = PressableProps & {
+export type ThemedLinkProps = LinkProps & {
     type?: 'default' | 'greyed' | "onboard";
-    text: string;
     textStyle?: TextStyle;
     containerStyle?: ViewStyle;
 };
 
-export function ThemedButton({
+export function ThemedLink({
     containerStyle,
-    text,
     textStyle,
     type = 'default',
+    children,
     ...rest
-}: ThemedTextProps) {
+}: ThemedLinkProps) {
     let color = black;
-    let backgroundColor = mainThemeColor;
+    let backgroundColor = black;
 
     switch(type) {
         case "greyed":
             color = veryDarkGery;
-            backgroundColor = veryLightGery;
             break;
         case "onboard":
-            color = black;
-            backgroundColor = mainStrongThemeColor
+            color = mainStrongThemeColor;
     }
 
     const size = useSharedValue(1);
@@ -35,30 +34,16 @@ export function ThemedButton({
     }));
 
     return (
-        <Pressable
+        <Link
         style={[
             containerStyle,
-            styles.defaultContainer,
+            { color },
+            textStyle,
+            styles.default,
         ]}
-        onPressIn={() => {
-            size.value = withSpring(0.9, { duration: 75 });
-        }}
-        onPressOut={() => {
-            size.value = withSpring(1, { duration: 75 });
-        }}
         {...rest}>
-            <Animated.View style={[
-                    styles.defaultAnimated,
-                    { backgroundColor },
-                    animatedStyle
-                ]}>
-                <Text style={[ 
-                    textStyle,
-                    { color },
-                    styles.default
-                ]}>{text}</Text>
-            </Animated.View>
-        </Pressable>
+            {children}
+        </Link>
     );
 }
 

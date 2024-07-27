@@ -58,8 +58,8 @@ function SessionProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if(kakao && !kakao.error && kakao.user && kakao.token){
-      setSession(kakao.token.idToken);
-      console.log(kakao.token.idToken);
+      setSession(kakao.token.accessToken);
+      console.log(kakao.token.accessToken);
       setUser({
         email: kakao.user.email,
         name: kakao.user.nickname,

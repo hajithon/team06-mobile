@@ -34,7 +34,7 @@ export default function RootLayout() {
           // Hide the header for all other routes.
           header: () => { return <SafeInset/> }
         }}>
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="index" />
         <Stack.Screen name="+not-found" />
       </Stack>
     </SessionProvider>
