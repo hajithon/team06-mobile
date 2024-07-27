@@ -1,4 +1,5 @@
 import { useStorageState } from '@/hooks/useStorageState';
+import useBackendLogin from '@/remote/backend/useBackendSession';
 import useGoogleLogin from '@/remote/google/useGoogleLogin';
 import useKakaoLogin from '@/remote/kakao/useKakaoLogin';
 import { useContext, createContext, type PropsWithChildren, useState, useEffect } from 'react';
@@ -43,11 +44,11 @@ function SessionProvider({ children }: PropsWithChildren) {
   const [ user, setUser ] = useState<MyUser | null>(null);
   const { google, googleLogin, googleLogout } = useGoogleLogin();
   const { kakao, signInWithKakao, signOutWithKakao } = useKakaoLogin();
+  const { sessionToken, backendLogin } = useBackendLogin();
 
   useEffect(() => {
     if(google && !google.error && google.userInfo?.user){
-      setSession(google.userInfo.idToken);
-      console.log(google.userInfo.idToken);
+      backendLogin(google.userInfo.idToken!, "google");
       setUser({
           email: google.userInfo.user.email,
           name: google.userInfo.user.name,
@@ -58,7 +59,7 @@ function SessionProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if(kakao && !kakao.error && kakao.user && kakao.token){
-      setSession(kakao.token.accessToken);
+      backendLogin(kakao.token.accessToken, "kakao");
       console.log(kakao.token.accessToken);
       setUser({
         email: kakao.user.email,
@@ -67,6 +68,11 @@ function SessionProvider({ children }: PropsWithChildren) {
     });
     }
   }, [kakao]);
+
+  useEffect(() => {
+    if(sessionToken)
+      setSession(sessionToken);
+  }, [sessionToken])
 
   return (
     <AuthContext.Provider
